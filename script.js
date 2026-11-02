@@ -19,12 +19,59 @@
 // }(); iife function
 
 //let bankbalance =12000 here it is public variable
-let Bank = (function () {
-    let bankbalance = 12000 // here it is private variable
-    //if we not want to change value we make it const
+// let Bank = (function () {
+//     let bankbalance = 12000; // here it is private variable
+//     //if we not want to change value we make it const
 
-    //use cases
-    //access the value and change the value
+//     //use cases
+//     //access the value and change the value
+
+//     function checkBalance() {
+//         console.log(bankbalance);
+//     }
+
+//     function setBalance(val) {
+//         bankbalance = val;
+//     }
+
+//     function withdraw(val) {
+//         if (val <= bankbalance) {
+//             bankbalance -= val;
+//             console.log(bankbalance);
+//         }
+//     }
+
+//     // any thing you return here will go out and saved in Bank
+//     return {
+//         checkBalance,
+//         setBalance,
+//         withdraw,
+//     };
+//     //here now bank get an object;
+// })();
+
+// interstingly everything is in the iife fuction so we can not access any single thing because every thing is private
+
+// this design pattern help you to build private things which you dont want any one to access outside the class
+
+
+//now Bank get an object by return in side the iife function so bank became object of this iife function 
+//so now we can access all function inside iife
+
+// Bank.checkBalance()
+// Bank.withdraw(12000);
+
+
+//Revealling Design Pattern
+//Revealling module pattern is very similar to module pattern
+
+
+// iife
+let Bank = (function () {
+    let bankbalance = 12000;
+
+
+
 
     function checkBalance() {
         console.log(bankbalance);
@@ -41,21 +88,15 @@ let Bank = (function () {
         }
     }
 
-    // any thing you return here will go out and saved in Bank
+
     return {
-        checkBalance,
-        setBalance,
-        withdraw,
+        check: checkBalance,
+        set: setBalance,
+        draw: withdraw,
+        //only difference in module pattern and revealling module pattern is you can set name in revealling module pattern
     };
-    //here now bank get an object;
+
 })();
-// interstingly everything is in the iife fuction so we can not access any single thing because every thing is private
 
-// this design pattern help you to build private things which you dont want any one to access outside the class
-
-
-//now Bank get an object by return in side the iife function so bank became object of this iife function 
-//so now we can access all function inside iife
-
-Bank.checkBalance()
-Bank.withdraw(12000);
+Bank.set(50000);
+Bank.check();
