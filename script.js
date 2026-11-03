@@ -67,36 +67,78 @@
 
 
 // iife
-let Bank = (function () {
-    let bankbalance = 12000;
+// let Bank = (function () {
+//     let bankbalance = 12000;
 
 
 
 
-    function checkBalance() {
-        console.log(bankbalance);
-    }
+//     function checkBalance() {
+//         console.log(bankbalance);
+//     }
 
-    function setBalance(val) {
-        bankbalance = val;
-    }
+//     function setBalance(val) {
+//         bankbalance = val;
+//     }
 
-    function withdraw(val) {
-        if (val <= bankbalance) {
-            bankbalance -= val;
-            console.log(bankbalance);
-        }
-    }
+//     function withdraw(val) {
+//         if (val <= bankbalance) {
+//             bankbalance -= val;
+//             console.log(bankbalance);
+//         }
+//     }
 
 
+//     return {
+//         check: checkBalance,
+//         set: setBalance,
+//         draw: withdraw,
+//         //only difference in module pattern and revealling module pattern is you can set name in revealling module pattern
+//     };
+
+// })();
+
+// Bank.set(50000);
+// Bank.check();
+
+
+// Factory Function Pattern
+// ek function banate ho jo objects create karta hai (factory = object banane ki machine)
+
+// Factory Function Pattern ek aisa design pattern hai jisme hum ek simple function likhte hain jo naye objects banakar return 
+// karta hai, bina class ya new keyword use kiya.
+
+// Is pattern ka main idea hai -> object creation ko ek function ke through control karna.
+
+// Har baar jab tum factory function call karte ho, tumhe ek naya
+
+function createProduct(name, price) {
+    let stock = 10;
     return {
-        check: checkBalance,
-        set: setBalance,
-        draw: withdraw,
-        //only difference in module pattern and revealling module pattern is you can set name in revealling module pattern
+        name,
+        price,
+        checkStock(){
+            console.log(stock);
+        },
+
+        buy(qty) {
+            if (qty <= stock) {
+                stock -= qty;
+                console.log(`${qty} pieces booked - ${stock} piece left.`);
+            }
+            else {
+                console.error(`out of stock we only have ${stock} in stock .`);
+            }
+            // if need more piece make and function which book order for future when stock comes we give all piece delivery at 
+            // that time either for now we not give them a any single piece
+        },
+
+        refill(qty) {
+            stock += qty;
+            console.log(`refill the stock - ${stock} pieces now.`)
+        },
     };
+}
 
-})();
-
-Bank.set(50000);
-Bank.check();
+let samsung = createProduct("samsung", 75252);
+let iphone = createProduct("iphone", 75252);
