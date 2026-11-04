@@ -112,33 +112,150 @@
 
 // Har baar jab tum factory function call karte ho, tumhe ek naya
 
-function createProduct(name, price) {
-    let stock = 10;
-    return {
-        name,
-        price,
-        checkStock(){
-            console.log(stock);
-        },
+// function createProduct(name, price) {
+//     let stock = 10;
+//     return {
+//         name,
+//         price,
+//         checkStock(){
+//             console.log(stock);
+//         },
 
-        buy(qty) {
-            if (qty <= stock) {
-                stock -= qty;
-                console.log(`${qty} pieces booked - ${stock} piece left.`);
-            }
-            else {
-                console.error(`out of stock we only have ${stock} in stock .`);
-            }
-            // if need more piece make and function which book order for future when stock comes we give all piece delivery at 
-            // that time either for now we not give them a any single piece
-        },
+//         buy(qty) {
+//             if (qty <= stock) {
+//                 stock -= qty;
+//                 console.log(`${qty} pieces booked - ${stock} piece left.`);
+//             }
+//             else {
+//                 console.error(`out of stock we only have ${stock} in stock .`);
+//             }
+//             // if need more piece make and function which book order for future when stock comes we give all piece delivery at 
+//             // that time either for now we not give them a any single piece
+//         },
 
-        refill(qty) {
-            stock += qty;
-            console.log(`refill the stock - ${stock} pieces now.`)
-        },
-    };
+//         refill(qty) {
+//             stock += qty;
+//             console.log(`refill the stock - ${stock} pieces now.`)
+//         },
+//     };
+// }
+
+// let samsung = createProduct("samsung", 75252);
+// let iphone = createProduct("iphone", 75252);
+
+
+//Observer Pattern
+
+// class YoutubeChannel {
+//     constructor(name) {
+//         this.subscribers = [];
+//         this.name = name;
+//     }
+
+//     subscribe(user) {
+//         this.subscribers.push(user);
+//         user.update(`You have subscribed the channel.`);
+//     }
+//     unsubscribe(user) {
+//         this.subscribers = this.subscribers.filter((sub) => sub !== user);
+//         user.update(`You have un-subscribed the channel.`);
+//     }
+//     notify(message) {
+//         this.subscribers.forEach((sub) => sub.update(message));
+//     }
+// }
+
+// class User {
+//     constructor(name) {
+//         this.name = name;
+//     }
+
+//     update(data) {
+//         console.log(`${this.name} ${data}`);
+//     }
+// }
+
+// let channel1 = new YoutubeChannel("techriv");
+// let user1 = new User("Danish khan");
+// let user2 = new User("wajahat khan");
+// let user3 = new User("Mazz khan");
+
+
+
+// channel1.subscribe(user1);
+// channel1.subscribe(user2);
+// channel1.subscribe(user3);
+
+// channel1.notify(`New Task Arrived on ${channel1.name}.`);
+
+
+//Observer Pattern with private variable
+
+class YoutubeChannel {
+    // 1. Private variables ko class ke start mein declare karna zaroori hai
+    #subscribers = [];
+    #name;
+
+    constructor(name) {
+        this.#name = name;
+    }
+
+    // 2. Channel ka naam bahar se read karne ke liye Getter
+    get name() {
+        return this.#name;
+    }
+
+    subscribe(user) {
+        this.#subscribers.push(user);
+        // Yahan user.name asal mein User  class ka 'get name()' chala raha hai
+        user.update(`${user.name} You have subscribed the channel.`);
+    }
+    
+    unsubscribe(user) {
+        this.#subscribers = this.#subscribers.filter((sub) => sub !== user);
+        user.update(`${user.name} You have un-subscribed the channel.`);
+    }
+    
+    notify(message) {
+        this.#subscribers.forEach((sub) => sub.update(message));
+    }
 }
 
-let samsung = createProduct("samsung", 75252);
-let iphone = createProduct("iphone", 75252);
+class User {
+    // 3. User ka naam bhi private kar diya
+    #name;
+
+    constructor(name) {
+        this.#name = name;
+    }
+
+    // 4. User ka naam bahar se read karne ke liye Getter
+    get name() {
+        return this.#name;
+    }
+
+    update(data) {
+        // Class ke andar hum direct private variable #name use kar sakte hain
+        console.log(`${this.#name} ${data}`);
+    }
+}
+
+// === Testing the Code ===
+
+let channel1 = new YoutubeChannel("techriv");
+
+let user1 = new User("Danish khan");
+console.log(user1.name);
+let user2 = new User("wajahat khan");
+console.log(user2.name);
+let user3 = new User("Mazz khan");
+console.log(user3.name);
+
+channel1.subscribe(user1);
+channel1.subscribe(user2);
+channel1.subscribe(user3);
+
+// Yahan channel1.name asal mein YoutubeChannel class ka 'get name()' chala raha hai
+channel1.notify(`New Task Arrived on ${channel1.name}.`);
+
+channel1.unsubscribe(user3);
