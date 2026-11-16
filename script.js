@@ -308,23 +308,25 @@
 // );
 // debounce na  apna inner ko return kar dia hai ais lia hum inner function maa ards get kar raha hain 
 
-function debounce(fnc, delay,) {
-    let timer;
-    return function (...args) {//yaha ya rest kar raha ya js ma mean collect kar raha hai
-        clearTimeout(timer);
-        timer = setTimeout(() => {
-            fnc(...args);//yaha yaa spread kar raha mean kisi bhi kam ka lia wapis bage raha hai chaha print ya kisi aur kam 
-        }, delay);
-    }
+// the real work of debounce
 
-}
+// function debounce(fnc, delay,) {
+//     let timer;
+//     return function (...args) {//yaha ya rest kar raha ya js ma mean collect kar raha hai
+//         clearTimeout(timer);
+//         timer = setTimeout(() => {
+//             fnc(...args);//yaha yaa spread kar raha mean kisi bhi kam ka lia wapis bage raha hai chaha print ya kisi aur kam 
+//         }, delay);
+//     }
 
-document.querySelector("input").addEventListener("input", debounce(function (dets) {
-    console.log(dets)
-}, 1000)
-);
+// }
 
-// ya meri delay ki value mana eventlistener ma dii wuhan sa wo debounce function ka pas gai debounce function return hua aus na delay ki value ko return function ko de dia 
+// document.querySelector("input").addEventListener("input", debounce(function (dets) {
+//     console.log(dets)
+// }, 1000)
+// );
+
+// ya meri delay ki value mana eventlistener ma dii wuhan sa wo debounce function ka pas gai debounce function return hua aus na delay ki value ko return function ko de dia
 
 
 // Isko aise samjhein:
@@ -338,3 +340,39 @@ document.querySelector("input").addEventListener("input", debounce(function (det
 // Toh technically: ...args = dets hi hai is specific case mein.
 
 // Aapne bilkul sahi concept catch kiya hai!
+
+
+
+// debounce -> ek delay bataaoge tum utna delay jab bhi aayega action ka reaction milega
+
+
+// throttle -> joo time doo autna time ka interval ka bad chalunga phir autna time dubara intinzar kara gaa phir ya asi tara 
+// repeat hota reha gaa jab tak tum ko bhi task tum 
+// perform kar raha hoo mean tumara task ki duration maa har autha tum har given time stamp guzarna ka bad ya function dubara 
+// dubara chala gaa 
+// exp:task duration 1 mint and time stamp 2 second to ya throttle aus given functiion ko har 2 second ma chalai gaa 1 mint tak
+
+
+function throttle(fnc, delay) {
+    let timer = 0;
+    return function (...args) {
+        let now = Date.now();       
+        if (now - timer >= delay) {
+        // ex firw 17000000-0>=3000 =>17000000 true instant on fw 
+        // -> secw 17001000-17000000>=3000 => 1000>=3000 False so timer remain same 17000000 because we not go in if function 
+        // -> thiw 17002000-17000000>=3000 => 2000>=3000 False so timer remain same 17000000 because we not go in if function 
+        // -> fouw 17003000-17000000>=3000 => 3000>=3000 ture ab change hoga timer to 17003000 kune ab hum function ka andar 
+        //    gaya hain
+        // -> fivw 17004000-17003000>=3000 => 1000>=3000 False so timer remain same 17003000 because we not go in if function
+            timer = now;
+            // firw timer = 17000000 -> secw timer = 17000000 sw -> thiw timer = 17000000 
+            // -> fouw timer = 17003000 -> fivw timer = 17003000
+            
+            fnc(...args);
+        }
+    }
+}
+
+document.querySelector("input").addEventListener("input", throttle((dets) => {
+    console.log(dets);
+}, 3000));
