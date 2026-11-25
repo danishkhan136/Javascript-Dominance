@@ -4,12 +4,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desgin Pattern</title>
+    <!-- <title>Desgin Pattern</title> -->
+    <title>Lazy Loading Example</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            color: white;
+
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .spacer {
+            height: 600px;
+        }
+
+        .lazy-img {
+            display: block;
+            width: 100%;
+            height: auto;
+            margin: 30px 0px;
+            opacity: 0;
+            transition: opacity 0.5s ease
+        }
+
+        .lazy-img.loaded {
+            opacity: 1;
+        }
+    </style>
 </head>
 
 <body>
-    <input type="text">
-    <script src=" script.js"></script>
+    <!-- <input type="text"> -->
+
+    <h1>Lazy Loading Images with IntersectionObserver </h1>
+
+    <div class="container">
+        <p>Scroll down to see images load only when they enter the viewport 👇</p>
+
+        <div class="spacer"></div>
+
+        <img data-src="./assets/images/1.jpg" class="lazy-img" alt="Image 1">
+
+        <div class="spacer"></div>
+
+        <img data-src="./assets/images/2.png" class="lazy-img" alt="Image 2">
+
+        <div class="spacer"></div>
+
+        <img data-src="./assets/images/1.jpg" class="lazy-img" alt="Image 3">
+
+        <div class="spacer"></div>
+
+        <img data-src="./assets/images/2.png" class="lazy-img" alt="Image 4">
+    </div>
+    <script src="./assets/js/script.js"></script>
 </body>
 
 </html>
