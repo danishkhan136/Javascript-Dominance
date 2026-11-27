@@ -378,25 +378,36 @@
 // }, 3000));
 
 
-let imgs = document.querySelectorAll("img");
+// let imgs = document.querySelectorAll("img");
 
-const observer = new IntersectionObserver(
-    function (entries, observer) {
-        entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                img.src = img.dataset.src;
-                img.classList.add("loaded",);
-                observer.unobserve(img);
-            }
-        })
-    },
-    {
-        root: null,
-        threshold: 0.1,
-    }
-);
+// const observer = new IntersectionObserver(
+//     function (entries, observer) {
+//         entries.forEach(function (entry) {
+//             if (entry.isIntersecting) {
+//                 const img = entry.target;
+//                 img.src = img.dataset.src;
+//                 img.classList.add("loaded",);
+//                 observer.unobserve(img);
+//             }
+//         })
+//     },
+//     {
+//         root: null,
+//         threshold: 0.1,
+//     }
+// );
 
-imgs.forEach(function (img) {
-    observer.observe(img);
+// imgs.forEach(function (img) {
+//     observer.observe(img);
+// })
+
+
+// Code Splitting with Dynamic Data
+
+const btn = document.querySelector("button");
+
+btn.addEventListener("click", async function () {
+    let heavy = await import("./heavy.js");
+
+    heavy.veryheavy();
 })

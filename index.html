@@ -5,14 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <title>Desgin Pattern</title> -->
-    <title>Lazy Loading Example</title>
+    <!-- <title>Lazy Loading Example</title> -->
+     <title>Code Splitting Demo</title>
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
 <body>
     <!-- <input type="text"> -->
 
-    <h1>Lazy Loading Images with IntersectionObserver </h1>
+    <!-- <h1>Lazy Loading Images with IntersectionObserver </h1>
 
     <div class="container">
         <p>Scroll down to see images load only when they enter the viewport 👇</p>
@@ -32,8 +33,11 @@
         <div class="spacer"></div>
 
         <img data-src="./assets/images/2.png" class="lazy-img" alt="Image 4">
-    </div>
-    <script src="./assets/js/script.js"></script>
+    </div> -->
+
+    <h1>Code Splitting with Dynamic Import</h1>
+    <button id="btn">Click to Load Heavy Module</button>
+    <script type="Module" src="./assets/js/script.js"></script>
 </body>
 
 </html>
